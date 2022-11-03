@@ -1,0 +1,56 @@
+html {
+  font-size: 10px;
+  background: bottom center;
+  background-color: black;
+  background-size: cover;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui;
+}
+kbd {
+  font-family: system-ui;
+}
+
+.keys {
+  display: flex;
+  flex: 1;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.key {
+  border: 0.1rem solid #e7ebd3;
+  border-radius: 0.5rem;
+  margin: 1rem;
+  font-size: 1rem;
+  padding: 1rem 0.5rem;
+  transition: all 0.05s ease;
+  width: 10rem;
+  text-align: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.4);
+  text-shadow: 0 0 0.5rem black;
+}
+
+.playing {
+  transform: scale(1.1);
+  border-color: #c1de31;
+  box-shadow: 0 0 1rem #c1de31;
+}
+
+kbd {
+  display: block;
+  font-size: 4rem;
+}
+
+.sound {
+  font-size: 1rem;
+  text-transform: lowercase;
+  width: 100%;
+  color: #e7ebd3;
+}
