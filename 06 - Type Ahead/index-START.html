@@ -1,22 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Type Ahead 👀</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Type Ahead 👀</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<form class="search-form">
+			<input type="text" class="search" placeholder="City or State" />
+			<ul class="suggestions">
+				<li>Filter for a city</li>
+				<li>or a state</li>
+			</ul>
+		</form>
+		<script>
+			const endpoint =
+				'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+			const cities = [];
 
-  <form class="search-form">
-    <input type="text" class="search" placeholder="City or State">
-    <ul class="suggestions">
-      <li>Filter for a city</li>
-      <li>or a state</li>
-    </ul>
-  </form>
-<script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+			fetch(endpoint)
+				.then(blobOfData => blobOfData.json())
+				.then(data => {
+					cities.push(...data);
+				});
+			//we have an array of cities. lets create a function that gets an array and search for cities name
+			// we need to grab what the user is typing
 
-</script>
-</body>
+			const searchInput = document.querySelector('.search');
+			const form = document.querySelector('.search-form');
+			const suggestions = document.querySelector('.suggestions');
+
+			function whatCity(wordToMatch, array) {
+				return array.filter(place => {
+					const regex = new RegExp(wordToMatch, 'gi');
+					return place.city.match(regex) || place.state.match(regex);
+				});
+			}
+
+			function displayResults() {
+				//we have an array of results - we want to grab the ul
+				const results = whatCity(this.value, cities);
+				const html = results.map(place => {
+					return `<li><span class="name">${place.city}, ${place.state}</span><span class="population">${place.population}</span></li>`;
+				});
+				suggestions.innerHTML = html;
+			}
+
+			searchInput.addEventListener('change', displayResults);
+			searchInput.addEventListener('keyup', displayResults);
+		</script>
+	</body>
 </html>
