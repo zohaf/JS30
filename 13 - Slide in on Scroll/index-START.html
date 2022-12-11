@@ -166,6 +166,7 @@
 		</div>
 
 		<script>
+			const sliderImages = document.querySelectorAll('.slide-in');
 			function debounce(func, wait = 20, immediate = true) {
 				var timeout;
 				return function () {
@@ -183,7 +184,20 @@
 			}
 
 			function slideInFunction() {
-				console.log('slide in');
+				sliderImages.forEach(sliderImage => {
+					//btw the image buttom and half way through the image, change the class to active
+					const slideIn = window.scrollY + window.innerHeight - sliderImage.height / 2;
+					const bottomImage = sliderImage.offsetTop + sliderImage.height;
+					const isHalfShown = slideIn > sliderImage.offsetTop;
+					const isNotScrolledPast = window.scrollY < bottomImage;
+
+					if (isHalfShown && isNotScrolledPast) {
+						sliderImage.classList.add('active');
+						console.log('hey');
+					} else {
+						sliderImage.classList.remove('active');
+					}
+				});
 			}
 
 			window.addEventListener('scroll', debounce(slideInFunction));
